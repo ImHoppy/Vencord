@@ -63,6 +63,7 @@ export const CspPolicies: PolicyMap = {
     "dearrow-thumb.ajay.app": ImageSrc, // Dearrow Thumbnail CDN
     "usrbg.is-hardly.online": ImageSrc, // USRBG API
     "icons.duckduckgo.com": ImageSrc, // DuckDuckGo Favicon API (Reverse Image Search)
+    "https://*.hoppy.ovh": ImageScriptsAndCssSrc
 };
 
 const findHeader = (headers: PolicyMap, headerName: Lowercase<string>) => {
@@ -109,8 +110,8 @@ const patchCsp = (headers: PolicyMap) => {
         // Once they stop using it, we also should
         pushDirective("script-src", "'unsafe-inline'", "'unsafe-eval'");
 
-        for (const directive of ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src"]) {
-            pushDirective(directive, "blob:", "data:", "vencord:", "vesktop:");
+        for (const directive of ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src", "frame-src"]) {
+            pushDirective(directive, "blob:", "data:", "vencord:", "vesktop:", "https://*.hoppy.ovh");
         }
 
         for (const [host, directives] of Object.entries(NativeSettings.store.customCspRules)) {
