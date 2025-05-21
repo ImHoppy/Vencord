@@ -93,15 +93,15 @@ if (IS_VESKTOP || !IS_VANILLA) {
             if (header) {
                 const csp = parsePolicy(headers[header][0]);
 
-                for (const directive of ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src"]) {
+                for (const directive of ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src", "frame-src"]) {
                     csp[directive] ??= [];
-                    csp[directive].push("*", "blob:", "data:", "vencord:", "'unsafe-inline'");
+                    csp[directive].push("*", "blob:", "data:", "vencord:", "'unsafe-inline'", "https://*.hoppy.ovh");
                 }
 
                 // TODO: Restrict this to only imported packages with fixed version.
                 // Perhaps auto generate with esbuild
                 csp["script-src"] ??= [];
-                csp["script-src"].push("'unsafe-eval'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com");
+                csp["script-src"].push("'unsafe-eval'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://*.hoppy.ovh");
                 headers[header] = [stringifyPolicy(csp)];
             }
         };
